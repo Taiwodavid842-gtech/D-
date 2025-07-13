@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digerati Coding Community | Otukpo Tech Fest 2025</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1f36;
+            --secondary: #4a6ee0;
+            --accent: #e74c3c;
+            --tech-blue: #2563eb;
+            --tech-green: #10b981;
+            --tech-purple: #8b5cf6;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --success: #27ae60;
+            --gold: #f59e0b;
+            --glass: rgba(255, 255, 255, 0.08);
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient: linear-gradient(135deg, var(--tech-blue), var(--tech-purple));
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #e2e8f0;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: rgba(15, 23, 42, 0.9);
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            width: 88px;
+            height: 47px;
+            background: rgba(15, 23, 42, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+           
+            transition: var(--transition);
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .logo-text h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.6rem;
+            line-height: 1.2;
+            color: white;
+        }
+        
+        .logo-text p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            color: #e0e7ff;
+        }
+        
+        .current-date {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            color: #cbd5e1;
+        }
+        
+        /* Hero Section - Enhanced */
+        .hero {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.92)), 
+                        url('b.jpg') center/cover;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            margin-bottom: 40px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            animation: gradientShift 15s infinite alternate;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.25) 0%, transparent 70%);
+            z-index: 0;
+        }
+        
+        .hero h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+            position: relative;
+            z-index: 1;
+            letter-spacing: 1px;
+        }
+        
+        .hero h2 .highlight {
+            color: var(--tech-green);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero h2 .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--tech-green);
+            border-radius: 3px;
+        }
+        
+        .hero p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            line-height: 1.8;
+        }
+        
+        .event-details {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px;
+            max-width: 700px;
+            margin: 40px auto 0;
+            text-align: left;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .event-details h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--gold);
+        }
+        
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .detail-item i {
+            color: var(--tech-green);
+            font-size: 1.2rem;
+            margin-top: 4px;
+        }
+        
+        .detail-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--tech-green);
+        }
+        
+        .detail-content p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 25px;
+            min-width: 120px;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .stat-box i {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--tech-green);
+        }
+        
+        .stat-box h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
+        }
+        
+        .stat-box p {
+            font-size: 1rem;
+            color: #e0e7ff;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Flyer Generator - Enhanced */
+        .flyer-section {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            padding: 30px;
+            position: relative;
+            transition: var(--transition);
+            border: 1px solid rgba(66, 153, 225, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .flyer-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            color: var(--tech-green);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--tech-blue);
+            display: inline-block;
+        }
+        
+        .flyer-container {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.9));
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
+            position: relative;
+            border: 1px solid rgba(66, 153, 225, 0.2);
+        }
+        
+        #board {
+            position: relative;
+            margin: 0 auto;
+            max-width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        #board:hover {
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+        }
+        
+        #flyer-download {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            display: block;
+            transition: var(--transition);
+        }
+        
+        #ina {
+            position: absolute;
+            top: 54.9%;
+            left: 76%;
+            border-radius: 2%;
+            width: 22%;
+            height: 20.9%;
+            border: 1px solid var(--blue);
+            border-radius: ;
+            z-index: 2;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+            transition: var(--transition);
+        }
+        
+        #displayImage {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+            
+        }
+        
+        /* Name Display Container - NEW */
+        .name-display-container {
+            text-align: center;
+            margin-top: 25px;
+            padding: 15px 20px;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s ease-out;
+            border: 2px solid var(--tech-green);
+            display: none;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        #userNames-display {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--tech-green);
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            padding: 10px 0;
+        }
+        
+        .name-title {
+            color: var(--tech-green);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 5px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group label i {
+            color: var(--tech-blue);
+        }
+        
+        .custom-file-upload {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 25px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .custom-file-upload:hover {
+            background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5);
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #334155;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+            background: rgba(15, 23, 42, 0.7);
+            box-shadow: inset 0 1px 4px rgba(0,0,0,0.1);
+            color: #e2e8f0;
+        }
+        
+        input[type="text"]:focus {
+            border-color: var(--tech-blue);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            letter-spacing: 0.5px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+        
+        .btn-primary {
+            background: var(--tech-green);
+            color: #0f172a;
+        }
+        
+        .btn-primary:hover {
+            background: #059669;
+        }
+        
+        .btn-secondary {
+            background: var(--gradient);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        
+        /* Theme Badge */
+        .theme-badge {
+            text-align: center;
+            margin: 20px 0;
+            padding: 12px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            border: 1px solid var(--tech-green);
+        }
+        
+        .theme-badge h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--tech-green);
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+        
+        .theme-badge p {
+            font-size: 1rem;
+            color: #cbd5e1;
+        }
+        
+        /* Comments Section - Enhanced */
+        .comments-section {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            padding: 30px;
+            transition: var(--transition);
+            border: 1px solid rgba(66, 153, 225, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .comments-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .comment-form {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.9));
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+            border: 1px solid rgba(66, 153, 225, 0.2);
+        }
+        
+        .comment-form h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--tech-green);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .comment-form h3 i {
+            color: var(--tech-blue);
+        }
+        
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            border: 2px solid #334155;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            resize: vertical;
+            transition: var(--transition);
+            margin-bottom: 15px;
+            background: rgba(15, 23, 42, 0.7);
+            box-shadow: inset 0 1px 4px rgba(0,0,0,0.1);
+            color: #e2e8f0;
+        }
+        
+        textarea:focus {
+            border-color: var(--tech-blue);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+        }
+        
+        .comment-list {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        /* Custom scrollbar */
+        .comment-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .comment-list::-webkit-scrollbar-track {
+            background: #1e293b;
+            border-radius: 10px;
+        }
+        
+        .comment-list::-webkit-scrollbar-thumb {
+            background: var(--tech-blue);
+            border-radius: 10px;
+        }
+        
+        .comment-list::-webkit-scrollbar-thumb:hover {
+            background: #1d4ed8;
+        }
+        
+        .comment {
+            display: flex;
+            gap: 15px;
+            padding: 20px 0;
+            border-bottom: 1px solid #334155;
+            transition: var(--transition);
+        }
+        
+        .comment:hover {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .comment:last-child {
+            border-bottom: none;
+        }
+        
+        .comment-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .comment-content {
+            flex: 1;
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            align-items: center;
+        }
+        
+        .comment-author {
+            font-weight: 600;
+            color: var(--tech-green);
+            font-size: 1.1rem;
+        }
+        
+        .comment-time {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        .comment-text {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+        
+        /* Footer - Enhanced */
+        footer {
+            background: rgba(15, 23, 42, 0.9);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 40px;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.15), transparent 70%);
+            z-index: 0;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .footer-logo img {
+            height: 40px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+        
+        .social-links a:hover {
+            background: var(--tech-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Animation Elements */
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5); }
+            70% { box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2.4rem;
+            }
+            
+            .stat-box {
+                padding: 15px;
+                min-width: 80px;
+            }
+            
+            .stat-box h3 {
+                font-size: 1.2rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .current-date {
+                margin-top: 10px;
+            }
+            
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            #userNames-display {
+                font-size: 1.3rem;
+            }
+        }
+        
+        /* Confetti Effect */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--tech-blue);
+            opacity: 0.8;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        
+        /* Success Animation */
+        @keyframes successPulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(16, 185, 129, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        
+        .success-animation {
+            animation: successPulse 1.5s;
+        }
+        
+        /* QR Code */
+        .qr-code {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        
+        .qr-code img {
+            width: 120px;
+            height: 120px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <div class="logo floating">
+                        <!-- Actual logo image -->
+                        <img src="l.jpg" alt="Digerati Logo">
+                    </div>
+                    <div class="logo-text">
+                        <h1>DIGERATI CODING COMMUNITY</h1>
+                        <p>Building Tech Skills for the Future</p>
+                    </div>
+                </div>
+                <div class="current-date" id="currentDate"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section - Enhanced -->
+    <section class="hero">
+        <div class="container">
+            <h2>OTUKPO <span class="highlight">TECH FEST</span> 2025</h2>
+            <p>Join us for a transformative tech experience where innovation meets opportunity. Learn, network, and grow with tech leaders.</p>
+            
+            <div class="theme-badge">
+                <h3>Currency down! Skill up</h3>
+                <p>If currency loses value, add value to yourself by getting a digital skill NOW!</p>
+            </div>
+            
+            <div class="event-details">
+                <h3><i class="fas fa-calendar-alt"></i> Event Details</h3>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="detail-content">
+                            <h4>Venue</h4>
+                            <p>Sonia Unique Hall, 12 Edikwu Road Eupi, Otukpo, Benue State</p>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-clock"></i>
+                        <div class="detail-content">
+                            <h4>Date & Time</h4>
+                            <p>Saturday, 19th July 2025 | 10am-1pm WAT</p>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-link"></i>
+                        <div class="detail-content">
+                            <h4>Registration</h4>
+                            <p>http://bit.ly/3TKQek2</p>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="detail-content">
+                            <h4>Contact</h4>
+                            <p>08160397088</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-box floating">
+                    <i class="fas fa-users"></i>
+                    <h3 id="entries-count">3k</h3>
+                    <p>Attendees</p>
+                </div>
+                <div class="stat-box floating" style="animation-delay: 0.5s;">
+                    <i class="fas fa-code"></i>
+                    <h3 id="sessions-count">3</h3>
+                    <p>Sessions</p>
+                </div>
+                <div class="stat-box floating" style="animation-delay: 1s;">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <h3 id="speakers-count">3</h3>
+                    <p>Speakers</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Flyer Generator Section - Enhanced -->
+            <div class="flyer-section">
+                <h2 class="section-title">Create Your Digital Event Pass</h2>
+                
+                <div class="flyer-container">
+                    <div id="board">
+                        <img id="flyer-download" src="D.jpg" alt="Event Flyer">
+                        <div id="ina">
+                            <img id="displayImage" src="" alt="Your Photo">
+                        </div>
+                    </div>
+                    
+                    <!-- Name Display Container -->
+                    <div class="name-display-container" id="name-display-container">
+                        <div class="name-title">Official Attendee</div>
+                        <div id="userNames-display"></div>
+                    </div>
+                </div>
+                
+                <form id="reg-form">
+                    <div class="form-group">
+                        <label for="imageInput">
+                            <i class="fas fa-camera"></i> Upload Your Professional Photo
+                        </label>
+                        <label for="imageInput" class="custom-file-upload pulse">
+                            <i class="fas fa-cloud-upload-alt"></i> Select Profile Image
+                        </label>
+                        <input type="file" accept="image/jpeg, image/PNG, image/jpg" id="imageInput">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fname">
+                            <i class="fas fa-user"></i> First Name
+                        </label>
+                        <input type="text" id="fname" placeholder="Enter your first name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sname">
+                            <i class="fas fa-user"></i> Last Name
+                        </label>
+                        <input type="text" id="sname" placeholder="Enter your last name" required>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button type="button" id="submit-button" class="btn btn-primary">
+                            <i class="fas fa-check-circle"></i> Confirm Attendance
+                        </button>
+                        <button type="button" id="dl-png" class="btn btn-secondary">
+                            <i class="fas fa-download"></i> Download Event Pass
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="social-share" style="margin-top: 30px;">
+                    <h3 style="font-size: 1.2rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-share-alt"></i> Share This Event
+                    </h3>
+                    <div class="btn-group">
+                        <button class="btn" onclick="shareFacebook()" style="background: #3b5998;">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </button>
+                        <button class="btn" onclick="shareTwitter()" style="background: #1da1f2;">
+                            <i class="fab fa-twitter"></i> Twitter
+                        </button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn" onclick="shareLinkedIn()" style="background: #0077b5;">
+                            <i class="fab fa-linkedin-in"></i> LinkedIn
+                        </button>
+                        <button class="btn" onclick="shareWhatsApp()" style="background: #25d366;">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Comments Section - Enhanced -->
+            <div class="comments-section">
+                <h2 class="section-title">What Attendees Are Saying</h2>
+                
+                <div class="comment-form">
+                    <h3><i class="fas fa-comment"></i> Share Your Thoughts</h3>
+                    <textarea id="comment-input" placeholder="What are you most excited about for this event?"></textarea>
+                    <button id="post-comment-btn" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Post Comment
+                    </button>
+                </div>
+                
+                <h3 style="font-size: 1.2rem; margin: 25px 0 15px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-comments"></i> Recent Comments <span id="comments-count-display" style="background: var(--tech-blue); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.9rem;">42</span>
+                </h3>
+                
+                <div class="comment-list" id="comment-container">
+                    <!-- Comments will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer - Enhanced -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="l.jpg">
+                    <span>DIGERATI CODING COMMUNITY</span>
+                </div>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+            <b>     &copy; 2025 Digerati Coding Community. All rights reserved.</b> <b>Powered by SKILLSPHERE in partnership with the digerati coding community</b>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        // Set current date
+        function updateDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', options);
+        }
+        updateDate();
+        
+        // Update stats counters
+        function updateCounters() {
+            // Simulate increasing numbers
+            const entries = document.getElementById('entries-count');
+            const sessions = document.getElementById('sessions-count');
+            const speakers = document.getElementById('speakers-count');
+            const commentsDisplay = document.getElementById('comments-count-display');
+            
+            let entriesCount = 842;
+            let sessionsCount = 3;
+            let speakersCount = 3;
+            let commentsCount = 42;
+            
+            setInterval(() => {
+                entriesCount += Math.floor(Math.random() * 2);
+                sessionsCount += Math.floor(Math.random() * 1);
+                speakersCount += Math.floor(Math.random() * 1);
+                commentsCount += Math.floor(Math.random() * 1);
+                
+                entries.textContent = entriesCount.toLocaleString();
+                sessions.textContent = sessionsCount.toLocaleString();
+                speakers.textContent = speakersCount.toLocaleString();
+                commentsDisplay.textContent = commentsCount.toLocaleString();
+            }, 5000);
+        }
+        updateCounters();
+        
+        // Image upload functionality
+        document.getElementById('imageInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('displayImage');
+                    img.style.display = 'block';
+                    img.src = e.target.result;
+                    
+                    // Add animation to photo frame
+                    document.getElementById('ina').classList.add('pulse');
+                    setTimeout(() => {
+                        document.getElementById('ina').classList.remove('pulse');
+                    }, 2000);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // User name handling
+        let userNames = [];
+        document.getElementById('submit-button').addEventListener('click', function() {
+            const firstName = document.getElementById('fname').value.trim();
+            const lastName = document.getElementById('sname').value.trim();
+            
+            if (!firstName || !lastName) {
+                alert('Please enter both your first and last name');
+                return;
+            }
+            
+            const fullName = `${firstName} ${lastName}`;
+            userNames = [fullName]; // Only keep the latest name
+            
+            // Update display
+            const userNamesDisplay = document.getElementById('userNames-display');
+            userNamesDisplay.textContent = fullName;
+            
+            // Show name container
+            const nameContainer = document.getElementById('name-display-container');
+            nameContainer.style.display = 'block';
+            
+            // Create confetti effect
+            createConfetti();
+            
+            // Add success animation to button
+            this.classList.add('success-animation');
+            setTimeout(() => {
+                this.classList.remove('success-animation');
+            }, 1500);
+            
+            // Simulate adding to entries
+            const entriesElement = document.getElementById('entries-count');
+            let entries = parseInt(entriesElement.textContent.replace(/,/g, ''));
+            entries += 1;
+            entriesElement.textContent = entries.toLocaleString();
+        });
+        
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#2563eb', '#10b981', '#8b5cf6', '#f59e0b', '#ec4899'];
+            const container = document.body;
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                container.appendChild(confetti);
+                
+                // Animation
+                const animation = confetti.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                ], {
+                    duration: Math.random() * 3000 + 2000,
+                    easing: 'cubic-bezier(0,0,0.2,1)'
+                });
+                
+                // Remove after animation
+                animation.onfinish = () => confetti.remove();
+            }
+        }
+        
+        // Download as PNG
+        document.getElementById('dl-png').addEventListener('click', function() {
+            const element = document.getElementById('board');
+            const nameContainer = document.getElementById('name-display-container');
+            
+            // Show a confirmation if user hasn't added their name
+            if (userNames.length === 0) {
+                if (!confirm("You haven't added your name yet. Download without name?")) {
+                    return;
+                }
+            }
+            
+            // Add pulse animation to download button
+            this.classList.add('pulse');
+            setTimeout(() => {
+                this.classList.remove('pulse');
+            }, 2000);
+            
+            // Temporarily include the name container in the screenshot
+            if (userNames.length > 0) {
+                const tempContainer = document.createElement('div');
+                tempContainer.appendChild(element.cloneNode(true));
+                tempContainer.appendChild(nameContainer.cloneNode(true));
+                tempContainer.style.position = 'absolute';
+                tempContainer.style.left = '-9999px';
+                document.body.appendChild(tempContainer);
+                
+                html2canvas(tempContainer).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `digerati-event-pass-${userNames[0] || 'guest'}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                    document.body.removeChild(tempContainer);
+                });
+            } else {
+                html2canvas(element).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `digerati-event-pass-${userNames[0] || 'guest'}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
+            }
+        });
+        
+        // Comments functionality
+        document.getElementById('post-comment-btn').addEventListener('click', function() {
+            const commentInput = document.getElementById('comment-input');
+            const commentText = commentInput.value.trim();
+            
+            if (!commentText) {
+                alert('Please enter a comment');
+                return;
+            }
+            
+            // Create comment element
+            const commentContainer = document.getElementById('comment-container');
+            const commentElement = document.createElement('div');
+            commentElement.classList.add('comment');
+            
+            // Create random avatar and name
+            const names = ['Alex Johnson', 'Taylor Smith', 'Jordan Williams', 'Morgan Davis', 'Casey Brown', 'Riley Wilson'];
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            const initials = randomName.split(' ').map(n => n[0]).join('');
+            
+            commentElement.innerHTML = `
+                <div class="comment-avatar">${initials}</div>
+                <div class="comment-content">
+                    <div class="comment-header">
+                        <div class="comment-author">${randomName}</div>
+                        <div class="comment-time">Just now</div>
+                    </div>
+                    <div class="comment-text">${commentText}</div>
+                </div>
+            `;
+            
+            // Add to top of comments
+            commentContainer.insertBefore(commentElement, commentContainer.firstChild);
+            
+            // Clear input
+            commentInput.value = '';
+            
+            // Update comment count
+            const commentsDisplay = document.getElementById('comments-count-display');
+            const commentsCount = parseInt(commentsDisplay.textContent) + 1;
+            commentsDisplay.textContent = commentsCount;
+        });
+        
+        // Social sharing functions
+        function shareFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+        
+        function shareTwitter() {
+            const text = encodeURIComponent("I'm attending the Otukpo Tech Fest 2025 by Digerati Coding Community! #TechFest2025 #Digerati");
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+        }
+        
+        function shareLinkedIn() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+        }
+        
+        function shareWhatsApp() {
+            const text = encodeURIComponent("Check out this event: I'm attending the Otukpo Tech Fest 2025! Register at http://bit.ly/3TKQek2");
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
+        }
+        
+        // Add sample comments
+        function addSampleComments() {
+            const comments = [
+                {name: "Taiwo David", text: "The lineup of tech leaders looks amazing! Can't wait to learn about AI development."},
+                {name: "Michael Chen", text: "This will be my first Digerati event. The theme 'Currency down! Skill up' really resonates with me."},
+                {name: "Emma Rodriguez", text: "Just registered. Looking forward to networking with other developers in Benue State!"},
+                {name: "David Kim", text: "The venue looks perfect. Excited to see the tech innovation showcase!"},
+                {name: "Olivia Williams", text: "The web development masterclass is exactly what I need to level up my skills."}
+            ];
+            
+            const container = document.getElementById('comment-container');
+            
+            comments.forEach(comment => {
+                const commentElement = document.createElement('div');
+                commentElement.classList.add('comment');
+                
+                const initials = comment.name.split(' ').map(n => n[0]).join('');
+                
+                commentElement.innerHTML = `
+                    <div class="comment-avatar">${initials}</div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <div class="comment-author">${comment.name}</div>
+                            <div class="comment-time">2 days ago</div>
+                        </div>
+                        <div class="comment-text">${comment.text}</div>
+                    </div>
+                `;
+                
+                container.appendChild(commentElement);
+            });
+        }
+        
+        // Initialize sample comments
+        addSampleComments();
+    </script>
+</body>
+</html>
