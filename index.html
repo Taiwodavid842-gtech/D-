@@ -902,6 +902,11 @@
             background-color: white;
             padding: 2px;
         }
+        
+        /* Debugging helper */
+        .debug-outline {
+            outline: 1px solid red;
+        }
     </style>
 </head>
 <body>
@@ -1271,6 +1276,11 @@
             inaContainer.style.width = '176px'; // 22% of 800px
             inaContainer.style.height = '167px'; // 20.9% of 800px
             
+            // Calculate top and left positions based on percentages
+            const flyerHeight = 800 * (flyerImg.naturalHeight / flyerImg.naturalWidth);
+            inaContainer.style.top = `${flyerHeight * 0.549}px`;
+            inaContainer.style.left = `${800 * 0.76}px`;
+            
             // Apply high-resolution styles to the user image
             const userImg = clone.querySelector('#displayImage');
             if (userImg.src) {
@@ -1281,9 +1291,37 @@
             
             document.body.appendChild(clone);
             
-            // Capture the clone with higher resolution
+            // Ensure images are loaded before capturing
+            const images = clone.querySelectorAll('img');
+            let loadedImages = 0;
+            const totalImages = images.length;
+            
+            // If there are no images, proceed immediately
+            if (totalImages === 0) {
+                captureClone(clone);
+                return;
+            }
+            
+            images.forEach(img => {
+                if (img.complete) {
+                    loadedImages++;
+                    if (loadedImages === totalImages) {
+                        captureClone(clone);
+                    }
+                } else {
+                    img.onload = () => {
+                        loadedImages++;
+                        if (loadedImages === totalImages) {
+                            captureClone(clone);
+                        }
+                    };
+                }
+            });
+        });
+        
+        function captureClone(clone) {
             html2canvas(clone, {
-                scale: 3, // Triple the resolution
+                scale: 2, // Double the resolution
                 useCORS: true,
                 allowTaint: true,
                 logging: false
@@ -1296,7 +1334,7 @@
                 // Remove the clone
                 document.body.removeChild(clone);
             });
-        });
+        }
         
         // Comments functionality
         document.getElementById('post-comment-btn').addEventListener('click', function() {
@@ -1399,6 +1437,21 @@
         
         // Initialize sample comments
         addSampleComments();
+        
+        // Preload images for demo purposes
+        window.addEventListener('load', () => {
+            // Create temporary images to preload
+            const preloadImages = [
+                'l.jpg',
+                'b.jpg',
+                'D.jpg'
+            ];
+            
+            preloadImages.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        });
     </script>
 </body>
 </html>
