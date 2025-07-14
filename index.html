@@ -1100,7 +1100,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="l.jpg">
+                    <img src="l.jpg" alt="logo">
                     <span>DIGERATI CODING COMMUNITY</span>
                 </div>
                 <div class="social-links">
@@ -1240,7 +1240,7 @@
             }
         }
         
-        // Download as PNG - FIXED: Now correctly captures uploaded photo
+        // Download as PNG - FIXED: Now correctly captures uploaded photo with high quality
         document.getElementById('dl-png').addEventListener('click', function() {
             const board = document.getElementById('board');
             const nameContainer = document.getElementById('name-display-container');
@@ -1258,13 +1258,16 @@
                 this.classList.remove('pulse');
             }, 2000);
             
-            // Create a temporary container for capture
+            // Create a temporary container for high-res capture
             const captureContainer = document.createElement('div');
             captureContainer.style.position = 'fixed';
             captureContainer.style.top = '-9999px';
             captureContainer.style.left = '-9999px';
-            captureContainer.style.width = '800px';
+            captureContainer.style.width = '800px'; // Double the original size for high-res
             captureContainer.style.zIndex = '10000';
+            captureContainer.style.backgroundColor = '#1e293b';
+            captureContainer.style.padding = '20px';
+            captureContainer.style.borderRadius = '12px';
             document.body.appendChild(captureContainer);
             
             // Clone the board and name container
@@ -1274,7 +1277,7 @@
             // Adjust styles for high-resolution capture
             boardClone.style.width = '800px';
             boardClone.style.height = 'auto';
-            boardClone.style.margin = '0';
+            boardClone.style.margin = '0 auto';
             
             // Adjust the flyer image
             const flyerImg = boardClone.querySelector('#flyer-download');
@@ -1290,6 +1293,11 @@
                 displayImage.style.display = 'block';
             }
             
+            // Adjust name container for high-res
+            nameContainerClone.style.maxWidth = '800px';
+            nameContainerClone.style.margin = '20px auto 0';
+            nameContainerClone.style.fontSize = '2rem';
+            
             // Append clones to capture container
             captureContainer.appendChild(boardClone);
             captureContainer.appendChild(nameContainerClone);
@@ -1299,9 +1307,30 @@
             let loadedImages = 0;
             const totalImages = images.length;
             
+            const captureAfterLoad = () => {
+                html2canvas(captureContainer, {
+                    scale: 3, // Triple the resolution for high-quality output
+                    useCORS: true,
+                    logging: false,
+                    backgroundColor: '#1e293b'
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `digerati-event-pass-${userNames[0] || 'guest'}.png`;
+                    link.href = canvas.toDataURL('image/png', 1.0); // Highest quality
+                    link.click();
+                    
+                    // Remove the temporary container
+                    document.body.removeChild(captureContainer);
+                }).catch(error => {
+                    console.error('Error generating image:', error);
+                    alert('Error generating event pass. Please try again.');
+                    document.body.removeChild(captureContainer);
+                });
+            };
+            
             // If there are no images, proceed immediately
             if (totalImages === 0) {
-                captureFlyer(captureContainer);
+                captureAfterLoad();
                 return;
             }
             
@@ -1310,37 +1339,24 @@
                 if (img.complete) {
                     loadedImages++;
                     if (loadedImages === totalImages) {
-                        captureFlyer(captureContainer);
+                        captureAfterLoad();
                     }
                 } else {
                     img.onload = () => {
                         loadedImages++;
                         if (loadedImages === totalImages) {
-                            captureFlyer(captureContainer);
+                            captureAfterLoad();
+                        }
+                    };
+                    img.onerror = () => {
+                        loadedImages++;
+                        if (loadedImages === totalImages) {
+                            captureAfterLoad();
                         }
                     };
                 }
             });
         });
-        
-        // Capture the flyer with html2canvas
-        function captureFlyer(container) {
-            html2canvas(container, {
-                scale: 2, // Double the resolution for high-quality output
-                useCORS: true,
-                allowTaint: true,
-                logging: false,
-                backgroundColor: null
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = `digerati-event-pass-${userNames[0] || 'guest'}.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-                
-                // Remove the temporary container
-                document.body.removeChild(container);
-            });
-        }
         
         // Comments functionality
         document.getElementById('post-comment-btn').addEventListener('click', function() {
