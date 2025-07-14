@@ -354,7 +354,6 @@
             transition: var(--transition);
         }
         
-        /* FIXED: Improved positioning and sizing */
         #ina {
             position: absolute;
             top: 54.9%;
@@ -373,7 +372,6 @@
             background: white;
         }
         
-        /* FIXED: Better image display */
         #displayImage {
             width: 100%;
             height: 100%;
@@ -381,7 +379,7 @@
             display: none;
         }
         
-        /* Name Display Container - NEW */
+        /* Name Display Container */
         .name-display-container {
             text-align: center;
             margin-top: 1px;
@@ -917,7 +915,7 @@
                 <div class="logo-container">
                     <div class="logo floating">
                         <!-- Actual logo image -->
-                        <img src="l.jpg" alt="Digerati Logo">
+                        <img src="l.jpg" alt="logo">
                     </div>
                     <div class="logo-text">
                         <h1>DIGERATI CODING COMMUNITY</h1>
@@ -1113,7 +1111,7 @@
                 </div>
             </div>
             <div class="copyright">
-            <b>     &copy; 2025 Digerati Coding Community. All rights reserved.</b> <b>Powered by SKILLSPHERE in partnership with the digerati coding community</b>
+                <b>&copy; 2025 Digerati Coding Community. All rights reserved.</b> <b>Powered by SKILLSPHERE in partnership with the digerati coding community</b>
             </div>
         </div>
     </footer>
@@ -1242,9 +1240,9 @@
             }
         }
         
-        // Download as PNG - FIXED IMAGE QUALITY
+        // Download as PNG - FIXED: Now correctly captures uploaded photo
         document.getElementById('dl-png').addEventListener('click', function() {
-            const element = document.getElementById('board');
+            const board = document.getElementById('board');
             const nameContainer = document.getElementById('name-display-container');
             
             // Show a confirmation if user hasn't added their name
@@ -1260,79 +1258,87 @@
                 this.classList.remove('pulse');
             }, 2000);
             
-            // Create a clone for better quality capture
-            const clone = element.cloneNode(true);
-            clone.style.position = 'absolute';
-            clone.style.left = '-9999px';
-            clone.style.width = '800px'; // Fixed width for high-res output
+            // Create a temporary container for capture
+            const captureContainer = document.createElement('div');
+            captureContainer.style.position = 'fixed';
+            captureContainer.style.top = '-9999px';
+            captureContainer.style.left = '-9999px';
+            captureContainer.style.width = '800px';
+            captureContainer.style.zIndex = '10000';
+            document.body.appendChild(captureContainer);
             
-            // Apply high-resolution styles to the image
-            const flyerImg = clone.querySelector('#flyer-download');
-            flyerImg.style.width = '800px';
+            // Clone the board and name container
+            const boardClone = board.cloneNode(true);
+            const nameContainerClone = nameContainer.cloneNode(true);
+            
+            // Adjust styles for high-resolution capture
+            boardClone.style.width = '800px';
+            boardClone.style.height = 'auto';
+            boardClone.style.margin = '0';
+            
+            // Adjust the flyer image
+            const flyerImg = boardClone.querySelector('#flyer-download');
+            flyerImg.style.width = '100%';
             flyerImg.style.height = 'auto';
             
-            // Apply high-resolution styles to the user image container
-            const inaContainer = clone.querySelector('#ina');
-            inaContainer.style.width = '176px'; // 22% of 800px
-            inaContainer.style.height = '167px'; // 20.9% of 800px
+            // Adjust the photo container
+            const inaContainer = boardClone.querySelector('#ina');
+            const displayImage = boardClone.querySelector('#displayImage');
             
-            // Calculate top and left positions based on percentages
-            const flyerHeight = 800 * (flyerImg.naturalHeight / flyerImg.naturalWidth);
-            inaContainer.style.top = `${flyerHeight * 0.549}px`;
-            inaContainer.style.left = `${800 * 0.76}px`;
-            
-            // Apply high-resolution styles to the user image
-            const userImg = clone.querySelector('#displayImage');
-            if (userImg.src) {
-                userImg.style.width = '100%';
-                userImg.style.height = '100%';
-                userImg.style.objectFit = 'cover';
+            // Ensure the photo is visible if uploaded
+            if (displayImage.src) {
+                displayImage.style.display = 'block';
             }
             
-            document.body.appendChild(clone);
+            // Append clones to capture container
+            captureContainer.appendChild(boardClone);
+            captureContainer.appendChild(nameContainerClone);
             
-            // Ensure images are loaded before capturing
-            const images = clone.querySelectorAll('img');
+            // Wait for images to load
+            const images = captureContainer.querySelectorAll('img');
             let loadedImages = 0;
             const totalImages = images.length;
             
             // If there are no images, proceed immediately
             if (totalImages === 0) {
-                captureClone(clone);
+                captureFlyer(captureContainer);
                 return;
             }
             
+            // Track loaded images
             images.forEach(img => {
                 if (img.complete) {
                     loadedImages++;
                     if (loadedImages === totalImages) {
-                        captureClone(clone);
+                        captureFlyer(captureContainer);
                     }
                 } else {
                     img.onload = () => {
                         loadedImages++;
                         if (loadedImages === totalImages) {
-                            captureClone(clone);
+                            captureFlyer(captureContainer);
                         }
                     };
                 }
             });
         });
         
-        function captureClone(clone) {
-            html2canvas(clone, {
-                scale: 2, // Double the resolution
+        // Capture the flyer with html2canvas
+        function captureFlyer(container) {
+            html2canvas(container, {
+                scale: 2, // Double the resolution for high-quality output
                 useCORS: true,
                 allowTaint: true,
-                logging: false
+                logging: false,
+                backgroundColor: null
             }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = `digerati-event-pass-${userNames[0] || 'guest'}.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
                 
-                // Remove the clone
-                document.body.removeChild(clone);
+                // Remove the temporary container
+                document.body.removeChild(container);
             });
         }
         
@@ -1437,21 +1443,6 @@
         
         // Initialize sample comments
         addSampleComments();
-        
-        // Preload images for demo purposes
-        window.addEventListener('load', () => {
-            // Create temporary images to preload
-            const preloadImages = [
-                'l.jpg',
-                'b.jpg',
-                'D.jpg'
-            ];
-            
-            preloadImages.forEach(src => {
-                const img = new Image();
-                img.src = src;
-            });
-        });
     </script>
 </body>
 </html>
