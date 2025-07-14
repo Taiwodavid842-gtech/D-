@@ -354,34 +354,30 @@
             transition: var(--transition);
         }
         
-        /* FIXED: Improved positioning and sizing */
         #ina {
             position: absolute;
             top: 54.9%;
             left: 76%;
+            border-radius: 2%;
             width: 22%;
             height: 20.9%;
+            border: 1px solid var(--tech-blue);
             z-index: 2;
             overflow: hidden;
             box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
             transition: var(--transition);
-            border-radius: 2%;
-            border: 1px solid var(--tech-blue);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: white;
+            background-color: white; /* Added white background */
         }
         
-        /* FIXED: Better image display */
         #displayImage {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* Maintain aspect ratio */
             display: none;
+            background-size: cover; /* Fallback for older browsers */
         }
         
-        /* Name Display Container - NEW */
+        /* Name Display Container */
         .name-display-container {
             text-align: center;
             margin-top: 1px;
@@ -884,24 +880,6 @@
             width: 120px;
             height: 120px;
         }
-        
-        /* Quality fixes */
-        #board {
-            width: 400px; /* Fixed width for better control */
-            max-width: 100%;
-            height: auto;
-        }
-        
-        #flyer-download {
-            width: 100%;
-            height: auto;
-        }
-        
-        /* High-res image positioning */
-        #ina {
-            background-color: white;
-            padding: 2px;
-        }
     </style>
 </head>
 <body>
@@ -1237,7 +1215,7 @@
             }
         }
         
-        // Download as PNG - FIXED IMAGE QUALITY
+        // Download as PNG - Enhanced with higher resolution
         document.getElementById('dl-png').addEventListener('click', function() {
             const element = document.getElementById('board');
             const nameContainer = document.getElementById('name-display-container');
@@ -1255,47 +1233,38 @@
                 this.classList.remove('pulse');
             }, 2000);
             
-            // Create a clone for better quality capture
-            const clone = element.cloneNode(true);
-            clone.style.position = 'absolute';
-            clone.style.left = '-9999px';
-            clone.style.width = '800px'; // Fixed width for high-res output
-            
-            // Apply high-resolution styles to the image
-            const flyerImg = clone.querySelector('#flyer-download');
-            flyerImg.style.width = '800px';
-            flyerImg.style.height = 'auto';
-            
-            // Apply high-resolution styles to the user image container
-            const inaContainer = clone.querySelector('#ina');
-            inaContainer.style.width = '176px'; // 22% of 800px
-            inaContainer.style.height = '167px'; // 20.9% of 800px
-            
-            // Apply high-resolution styles to the user image
-            const userImg = clone.querySelector('#displayImage');
-            if (userImg.src) {
-                userImg.style.width = '100%';
-                userImg.style.height = '100%';
-                userImg.style.objectFit = 'cover';
-            }
-            
-            document.body.appendChild(clone);
-            
-            // Capture the clone with higher resolution
-            html2canvas(clone, {
-                scale: 3, // Triple the resolution
-                useCORS: true,
-                allowTaint: true,
-                logging: false
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = `digerati-event-pass-${userNames[0] || 'guest'}.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
+            // Temporarily include the name container in the screenshot
+            if (userNames.length > 0) {
+                const tempContainer = document.createElement('div');
+                tempContainer.appendChild(element.cloneNode(true));
+                tempContainer.appendChild(nameContainer.cloneNode(true));
+                tempContainer.style.position = 'absolute';
+                tempContainer.style.left = '-9999px';
+                document.body.appendChild(tempContainer);
                 
-                // Remove the clone
-                document.body.removeChild(clone);
-            });
+                html2canvas(tempContainer, {
+                    scale: 3, // Increase scale for higher resolution
+                    useCORS: true,
+                    logging: false
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `digerati-event-pass-${userNames[0] || 'guest'}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                    document.body.removeChild(tempContainer);
+                });
+            } else {
+                html2canvas(element, {
+                    scale: 3, // Increase scale for higher resolution
+                    useCORS: true,
+                    logging: false
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `digerati-event-pass-${userNames[0] || 'guest'}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
+            }
         });
         
         // Comments functionality
