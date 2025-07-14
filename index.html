@@ -354,6 +354,7 @@
             transition: var(--transition);
         }
         
+        /* FIXED: Improved positioning and sizing */
         #ina {
             position: absolute;
             top: 54.9%;
@@ -372,6 +373,7 @@
             background: white;
         }
         
+        /* FIXED: Better image display */
         #displayImage {
             width: 100%;
             height: 100%;
@@ -379,7 +381,7 @@
             display: none;
         }
         
-        /* Name Display Container */
+        /* Name Display Container - NEW */
         .name-display-container {
             text-align: center;
             margin-top: 1px;
@@ -900,11 +902,6 @@
             background-color: white;
             padding: 2px;
         }
-        
-        /* Debugging helper */
-        .debug-outline {
-            outline: 1px solid red;
-        }
     </style>
 </head>
 <body>
@@ -915,7 +912,7 @@
                 <div class="logo-container">
                     <div class="logo floating">
                         <!-- Actual logo image -->
-                        <img src="l.jpg" alt="logo">
+                        <img src="l.jpg" alt="Digerati Logo">
                     </div>
                     <div class="logo-text">
                         <h1>DIGERATI CODING COMMUNITY</h1>
@@ -1100,7 +1097,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="l.jpg" alt="logo">
+                    <img src="l.jpg">
                     <span>DIGERATI CODING COMMUNITY</span>
                 </div>
                 <div class="social-links">
@@ -1111,7 +1108,7 @@
                 </div>
             </div>
             <div class="copyright">
-                <b>&copy; 2025 Digerati Coding Community. All rights reserved.</b> <b>Powered by SKILLSPHERE in partnership with the digerati coding community</b>
+            <b>     &copy; 2025 Digerati Coding Community. All rights reserved.</b> <b>Powered by SKILLSPHERE in partnership with the digerati coding community</b>
             </div>
         </div>
     </footer>
@@ -1240,9 +1237,9 @@
             }
         }
         
-        // Download as PNG - FIXED: Now correctly captures uploaded photo with high quality
+        // Download as PNG - FIXED IMAGE QUALITY
         document.getElementById('dl-png').addEventListener('click', function() {
-            const board = document.getElementById('board');
+            const element = document.getElementById('board');
             const nameContainer = document.getElementById('name-display-container');
             
             // Show a confirmation if user hasn't added their name
@@ -1258,103 +1255,46 @@
                 this.classList.remove('pulse');
             }, 2000);
             
-            // Create a temporary container for high-res capture
-            const captureContainer = document.createElement('div');
-            captureContainer.style.position = 'fixed';
-            captureContainer.style.top = '-9999px';
-            captureContainer.style.left = '-9999px';
-            captureContainer.style.width = '800px'; // Double the original size for high-res
-            captureContainer.style.zIndex = '10000';
-            captureContainer.style.backgroundColor = '#1e293b';
-            captureContainer.style.padding = '20px';
-            captureContainer.style.borderRadius = '12px';
-            document.body.appendChild(captureContainer);
+            // Create a clone for better quality capture
+            const clone = element.cloneNode(true);
+            clone.style.position = 'absolute';
+            clone.style.left = '-9999px';
+            clone.style.width = '800px'; // Fixed width for high-res output
             
-            // Clone the board and name container
-            const boardClone = board.cloneNode(true);
-            const nameContainerClone = nameContainer.cloneNode(true);
-            
-            // Adjust styles for high-resolution capture
-            boardClone.style.width = '800px';
-            boardClone.style.height = 'auto';
-            boardClone.style.margin = '0 auto';
-            
-            // Adjust the flyer image
-            const flyerImg = boardClone.querySelector('#flyer-download');
-            flyerImg.style.width = '100%';
+            // Apply high-resolution styles to the image
+            const flyerImg = clone.querySelector('#flyer-download');
+            flyerImg.style.width = '800px';
             flyerImg.style.height = 'auto';
             
-            // Adjust the photo container
-            const inaContainer = boardClone.querySelector('#ina');
-            const displayImage = boardClone.querySelector('#displayImage');
+            // Apply high-resolution styles to the user image container
+            const inaContainer = clone.querySelector('#ina');
+            inaContainer.style.width = '176px'; // 22% of 800px
+            inaContainer.style.height = '167px'; // 20.9% of 800px
             
-            // Ensure the photo is visible if uploaded
-            if (displayImage.src) {
-                displayImage.style.display = 'block';
+            // Apply high-resolution styles to the user image
+            const userImg = clone.querySelector('#displayImage');
+            if (userImg.src) {
+                userImg.style.width = '100%';
+                userImg.style.height = '100%';
+                userImg.style.objectFit = 'cover';
             }
             
-            // Adjust name container for high-res
-            nameContainerClone.style.maxWidth = '800px';
-            nameContainerClone.style.margin = '20px auto 0';
-            nameContainerClone.style.fontSize = '2rem';
+            document.body.appendChild(clone);
             
-            // Append clones to capture container
-            captureContainer.appendChild(boardClone);
-            captureContainer.appendChild(nameContainerClone);
-            
-            // Wait for images to load
-            const images = captureContainer.querySelectorAll('img');
-            let loadedImages = 0;
-            const totalImages = images.length;
-            
-            const captureAfterLoad = () => {
-                html2canvas(captureContainer, {
-                    scale: 3, // Triple the resolution for high-quality output
-                    useCORS: true,
-                    logging: false,
-                    backgroundColor: '#1e293b'
-                }).then(canvas => {
-                    const link = document.createElement('a');
-                    link.download = `digerati-event-pass-${userNames[0] || 'guest'}.png`;
-                    link.href = canvas.toDataURL('image/png', 1.0); // Highest quality
-                    link.click();
-                    
-                    // Remove the temporary container
-                    document.body.removeChild(captureContainer);
-                }).catch(error => {
-                    console.error('Error generating image:', error);
-                    alert('Error generating event pass. Please try again.');
-                    document.body.removeChild(captureContainer);
-                });
-            };
-            
-            // If there are no images, proceed immediately
-            if (totalImages === 0) {
-                captureAfterLoad();
-                return;
-            }
-            
-            // Track loaded images
-            images.forEach(img => {
-                if (img.complete) {
-                    loadedImages++;
-                    if (loadedImages === totalImages) {
-                        captureAfterLoad();
-                    }
-                } else {
-                    img.onload = () => {
-                        loadedImages++;
-                        if (loadedImages === totalImages) {
-                            captureAfterLoad();
-                        }
-                    };
-                    img.onerror = () => {
-                        loadedImages++;
-                        if (loadedImages === totalImages) {
-                            captureAfterLoad();
-                        }
-                    };
-                }
+            // Capture the clone with higher resolution
+            html2canvas(clone, {
+                scale: 3, // Triple the resolution
+                useCORS: true,
+                allowTaint: true,
+                logging: false
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `digerati-event-pass-${userNames[0] || 'guest'}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                
+                // Remove the clone
+                document.body.removeChild(clone);
             });
         });
         
